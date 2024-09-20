@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { socket } from '@/libs/socket'
 import Login from './Login/Login'
+import MessageInput from './MessageInput/MessageInput'
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected)
@@ -36,6 +37,7 @@ function App() {
         <div className="main-container">
           <h1>Welcome to the Dashboard!</h1>
           <p>You are successfully connected as {username}.</p> {/* Display username */}
+          <MessageInput />
         </div>
       )}
     </div>

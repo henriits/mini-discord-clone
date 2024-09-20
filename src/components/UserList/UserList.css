@@ -1,0 +1,15 @@
+.user-list {
+  background-color: #2c2f33;
+  padding: 10px;
+  max-width: 200px; /* Width of the user list */
+}
+
+.user-item {
+  padding: 10px;
+  color: #b9bbbe;
+  cursor: pointer;
+}
+
+.user-item:hover {
+  background-color: #36393f; /* Highlight on hover */
+}

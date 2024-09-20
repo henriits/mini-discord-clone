@@ -1,11 +1,16 @@
 .message-list {
-  background-color: #2c2f33;
+  background-color: #2c2f33; /* Dark background */
   padding: 10px;
   flex: 1; /* Take available space */
   overflow-y: auto; /* Scroll if messages exceed height */
+  max-height: calc(100vh - 200px); /* Adjust 200px based on other components' height */
 }
 
 .message-item {
-  padding: 5px;
-  color: #b9bbbe;
+  margin-bottom: 20px; /* Space between messages */
+  padding: 8px; /* Padding inside message */
+  border-radius: 4px; /* Rounded corners */
+  background-color: #42464d; /* Background color for each message */
+  color: #b9bbbe; /* Light grey text */
+  word-break: break-all;
 }

@@ -1,0 +1,15 @@
+.channel-list {
+  background-color: #2c2f33; /* Background color */
+  padding: 10px;
+  max-width: 200px; /* Width of the channel list */
+}
+
+.channel-item {
+  padding: 10px;
+  color: #b9bbbe;
+  cursor: pointer;
+}
+
+.channel-item:hover {
+  background-color: #36393f; /* Highlight on hover */
+}

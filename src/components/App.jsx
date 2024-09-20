@@ -3,11 +3,21 @@ import { socket } from '@/libs/socket'
 import Login from './Login/Login'
 import MessageInput from './MessageInput/MessageInput'
 import MessageList from './MessageList/MessageList'
+import ChannelList from './ChannelList/ChannelList'
+import UserList from './UserList/UserList'
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected)
   const [username, setUsername] = useState(null) // State to hold the username
   const [messages, setMessages] = useState([])
+  const [channels] = useState([
+    { id: 1, name: 'General' },
+    { id: 2, name: 'Random' },
+  ]) // add static data for moment
+  const [users] = useState([
+    { id: 1, username: 'User1' },
+    { id: 2, username: 'User2' },
+  ]) // add static data for moment
 
   const sendMessage = message => {
     setMessages(prev => [...prev, { user: username, text: message }])
@@ -35,16 +45,21 @@ function App() {
   }, [])
 
   return (
-    <div>
-      {/* Show different components based on the connection state */}
+    <div className="app-container">
       {!isConnected ? (
         <Login setUsername={setUsername} />
       ) : (
         <div className="main-container">
-          <h1>Welcome to the Dashboard!</h1>
-          <p>You are successfully connected as {username}.</p> {/* Display username */}
-          <MessageList messages={messages} />
-          <MessageInput sendMessage={sendMessage} />
+          <p>Mini-Discord-clone</p>
+          <p>You are successfully connected as {username}.</p>
+          <div className="chat-layout">
+            <ChannelList channels={channels} />
+            <div className="messages-container">
+              <MessageList messages={messages} />
+              <MessageInput sendMessage={sendMessage} />
+            </div>
+            <UserList users={users} />
+          </div>
         </div>
       )}
     </div>

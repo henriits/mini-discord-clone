@@ -1,0 +1,11 @@
+.message-list {
+  background-color: #2c2f33;
+  padding: 10px;
+  flex: 1; /* Take available space */
+  overflow-y: auto; /* Scroll if messages exceed height */
+}
+
+.message-item {
+  padding: 5px;
+  color: #b9bbbe;
+}

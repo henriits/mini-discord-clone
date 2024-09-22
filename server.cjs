@@ -19,7 +19,7 @@ const io = new socketIo.Server(server, {
   },
 })
 
-const CHANNEL_NAMES = ['welcome', 'general', 'react', 'learners', 'casual']
+const CHANNEL_NAMES = ['welcome', 'general', 'react', 'learners', 'casual', 'random']
 const WELCOME_CHANNEL = 'welcome'
 
 const sessions = initializeStore()

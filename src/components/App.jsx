@@ -8,39 +8,49 @@ import UserList from './UserList/UserList'
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected)
-  const [username, setUsername] = useState(null) // State to hold the username
+  const [username, setUsername] = useState(null)
   const [messages, setMessages] = useState([])
-  const [channels] = useState([
-    { id: 1, name: 'General' },
-    { id: 2, name: 'Random' },
-  ]) // add static data for moment
-  const [users] = useState([
-    { id: 1, username: 'User1' },
-    { id: 2, username: 'User2' },
-  ]) // add static data for moment
+  const [channels, setChannels] = useState([])
+  const [users, setUsers] = useState([])
 
   const sendMessage = message => {
-    setMessages(prev => [...prev, { user: username, text: message }])
+    socket.emit('message:channel:send', 'general', message) // Send to the general channel
   }
 
   useEffect(() => {
-    // Event listeners for socket connection
     const onConnect = () => {
       setIsConnected(true)
     }
 
     const onDisconnect = () => {
       setIsConnected(false)
-      setUsername(null) // Clear the username on disconnect
+      setUsername(null)
+    }
+
+    const onMessageReceived = (channel, message) => {
+      setMessages(prev => [...prev, message])
+    }
+
+    const onChannelsReceived = channels => {
+      setChannels(channels)
+    }
+
+    const onUsersUpdate = users => {
+      setUsers(users)
     }
 
     socket.on('connect', onConnect)
     socket.on('disconnect', onDisconnect)
+    socket.on('message:channel', onMessageReceived)
+    socket.on('channels', onChannelsReceived)
+    socket.on('users', onUsersUpdate)
 
-    // Clean up the event listeners on unmount
     return () => {
       socket.off('connect', onConnect)
       socket.off('disconnect', onDisconnect)
+      socket.off('message:channel', onMessageReceived)
+      socket.off('channels', onChannelsReceived)
+      socket.off('users', onUsersUpdate)
     }
   }, [])
 

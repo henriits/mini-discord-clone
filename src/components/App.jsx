@@ -12,7 +12,7 @@ function App() {
   const [channels, setChannels] = useState([])
   const [users, setUsers] = useState([])
   const [currentChannel, setCurrentChannel] = useState(null)
-  const [messages, setMessages] = useState([])
+  const [messagesByChannel, setMessagesByChannel] = useState({}) // Store messages per channel
 
   const sendMessage = message => {
     if (currentChannel) {
@@ -20,6 +20,12 @@ function App() {
     }
   }
 
+  // Select a channel and load its messages
+  const handleChannelSelect = channel => {
+    setCurrentChannel(channel)
+  }
+
+  // Handle WebSocket events
   useEffect(() => {
     const onConnect = () => setIsConnected(true)
 
@@ -34,17 +40,37 @@ function App() {
 
     const onChannels = channels => {
       setChannels(channels)
-      setCurrentChannel(channels[0].name) // Auto-select first channel
-      setMessages(channels[0].messages) // Load initial messages for the first channel
+      const initialChannel = channels[0].name
+      setCurrentChannel(initialChannel) // Auto-select the first channel
+
+      // Initialize messagesByChannel state for each channel
+      const initialMessagesByChannel = channels.reduce((acc, channel) => {
+        acc[channel.name] = channel.messages // Store each channel's messages
+        return acc
+      }, {})
+      setMessagesByChannel(initialMessagesByChannel)
     }
 
     const onMessageReceived = (channel, message) => {
-      if (channel === currentChannel) {
-        setMessages(prev => [...prev, message])
-      }
+      setMessagesByChannel(prev => ({
+        ...prev,
+        [channel]: [...(prev[channel] || []), message], // Add message to the correct channel
+      }))
     }
 
     const onUsersUpdate = users => setUsers(users)
+
+    const onUserJoin = user => {
+      setUsers(prev => [...prev, user])
+    }
+
+    const onUserLeave = user => {
+      setUsers(prev => prev.map(u => (u.userId === user.userId ? { ...u, connected: false } : u)))
+    }
+
+    const onUserDisconnect = user => {
+      setUsers(prev => prev.map(u => (u.userId === user.userId ? { ...u, connected: false } : u)))
+    }
 
     socket.on('connect', onConnect)
     socket.on('disconnect', onDisconnect)
@@ -52,6 +78,9 @@ function App() {
     socket.on('channels', onChannels)
     socket.on('message:channel', onMessageReceived)
     socket.on('users', onUsersUpdate)
+    socket.on('user:join', onUserJoin)
+    socket.on('user:leave', onUserLeave)
+    socket.on('user:disconnect', onUserDisconnect)
 
     return () => {
       socket.off('connect', onConnect)
@@ -60,15 +89,15 @@ function App() {
       socket.off('channels', onChannels)
       socket.off('message:channel', onMessageReceived)
       socket.off('users', onUsersUpdate)
+      socket.off('user:join', onUserJoin)
+      socket.off('user:leave', onUserLeave)
+      socket.off('user:disconnect', onUserDisconnect)
     }
   }, [currentChannel])
 
-  const handleChannelSelect = channel => {
-    const selectedChannel = channels.find(ch => ch.name === channel)
-    if (selectedChannel) {
-      setCurrentChannel(channel)
-      setMessages(selectedChannel.messages) // Load messages for the selected channel
-    }
+  const leaveServer = () => {
+    socket.emit('user:leave')
+    socket.disconnect()
   }
 
   return (
@@ -81,10 +110,11 @@ function App() {
           <p>
             You are connected as {username} in #{currentChannel}.
           </p>
+          <button onClick={leaveServer}>Leave Server</button>
           <div className="chat-layout">
             <ChannelList channels={channels} onChannelSelect={handleChannelSelect} />
             <div className="messages-container">
-              <MessageList messages={messages} />
+              <MessageList messages={messagesByChannel[currentChannel] || []} />
               <MessageInput sendMessage={sendMessage} />
             </div>
             <UserList users={users} />

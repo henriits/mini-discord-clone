@@ -7,9 +7,9 @@ function Login({ setUsername }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    socket.auth = { username } // Set the username for the socket
-    socket.connect() // Connect to the socket
-    setUsername(username) // Update the username in the App component
+    socket.auth = { username }
+    socket.connect()
+    setUsername(username)
   }
 
   return (

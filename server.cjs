@@ -83,7 +83,6 @@ io.on('connection', socket => {
     socket.in(WELCOME_CHANNEL).emit('user:leave', {
       userId: currentSession.userId,
       username: currentSession.username,
-      connected: false,
     })
 
     sessions.deleteSession(socket.sessionId)

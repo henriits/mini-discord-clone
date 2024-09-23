@@ -20,12 +20,10 @@ function App() {
     }
   }
 
-  // Select a channel and load its messages
   const handleChannelSelect = channel => {
     setCurrentChannel(channel)
   }
 
-  // Handle WebSocket events
   useEffect(() => {
     const onConnect = () => setIsConnected(true)
 
@@ -43,7 +41,6 @@ function App() {
       const initialChannel = channels[0].name
       setCurrentChannel(initialChannel)
 
-      // Initialize messagesByChannel for each channel
       const initialMessagesByChannel = channels.reduce((acc, channel) => {
         acc[channel.name] = channel.messages
         return acc
@@ -61,7 +58,14 @@ function App() {
     const onUsersUpdate = users => setUsers(users)
 
     const onUserJoin = user => {
-      setUsers(prev => [...prev, user])
+      setUsers(prev => {
+        // Add user or update their status as connected if they reconnect
+        const updatedUsers = prev.map(u =>
+          u.userId === user.userId ? { ...u, connected: true } : u,
+        )
+        const userExists = updatedUsers.some(u => u.userId === user.userId)
+        return userExists ? updatedUsers : [...updatedUsers, user]
+      })
 
       // Add a welcome message in the "welcome" channel
       setMessagesByChannel(prev => ({
@@ -74,7 +78,8 @@ function App() {
     }
 
     const onUserLeave = user => {
-      setUsers(prev => prev.map(u => (u.userId === user.userId ? { ...u, connected: false } : u)))
+      setUsers(prev => prev.filter(u => u.userId !== user.userId))
+
       // Add a "user has left" message in the "welcome" channel
       setMessagesByChannel(prev => ({
         ...prev,
@@ -95,7 +100,7 @@ function App() {
     socket.on('channels', onChannels)
     socket.on('message:channel', onMessageReceived)
     socket.on('users', onUsersUpdate)
-    socket.on('user:join', onUserJoin) // Listen for 'user:join' event
+    socket.on('user:join', onUserJoin)
     socket.on('user:leave', onUserLeave)
     socket.on('user:disconnect', onUserDisconnect)
 
@@ -113,8 +118,12 @@ function App() {
   }, [currentChannel])
 
   const leaveServer = () => {
-    socket.emit('user:leave')
+    socket.emit('user:leave') // Trigger the leave event
     socket.disconnect()
+  }
+
+  const disconnect = () => {
+    socket.disconnect() // Just disconnect the user
   }
 
   return (
@@ -128,6 +137,7 @@ function App() {
             You are connected as {username} in #{currentChannel}.
           </p>
           <button onClick={leaveServer}>Leave Server</button>
+          <button onClick={disconnect}>Disconnect</button> {/* Disconnect Button */}
           <div className="chat-layout">
             <ChannelList channels={channels} onChannelSelect={handleChannelSelect} />
             <div className="messages-container">

@@ -2,7 +2,7 @@ import './UserList.css'
 
 function UserList({ users }) {
   return (
-    <div className="users-container">
+    <div className="user-list">
       <div className="online-users">
         <p className="user-status">ONLINE</p>
         {users.length > 0 &&

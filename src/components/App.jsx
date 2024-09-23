@@ -12,7 +12,7 @@ function App() {
   const [channels, setChannels] = useState([])
   const [users, setUsers] = useState([])
   const [currentChannel, setCurrentChannel] = useState(null)
-  const [messagesByChannel, setMessagesByChannel] = useState({}) // Store messages per channel
+  const [messagesByChannel, setMessagesByChannel] = useState({})
 
   const sendMessage = message => {
     if (currentChannel) {
@@ -41,11 +41,11 @@ function App() {
     const onChannels = channels => {
       setChannels(channels)
       const initialChannel = channels[0].name
-      setCurrentChannel(initialChannel) // Auto-select the first channel
+      setCurrentChannel(initialChannel)
 
-      // Initialize messagesByChannel state for each channel
+      // Initialize messagesByChannel for each channel
       const initialMessagesByChannel = channels.reduce((acc, channel) => {
-        acc[channel.name] = channel.messages // Store each channel's messages
+        acc[channel.name] = channel.messages
         return acc
       }, {})
       setMessagesByChannel(initialMessagesByChannel)
@@ -54,7 +54,7 @@ function App() {
     const onMessageReceived = (channel, message) => {
       setMessagesByChannel(prev => ({
         ...prev,
-        [channel]: [...(prev[channel] || []), message], // Add message to the correct channel
+        [channel]: [...(prev[channel] || []), message],
       }))
     }
 
@@ -62,10 +62,27 @@ function App() {
 
     const onUserJoin = user => {
       setUsers(prev => [...prev, user])
+
+      // Add a welcome message in the "welcome" channel
+      setMessagesByChannel(prev => ({
+        ...prev,
+        welcome: [
+          ...(prev['welcome'] || []),
+          { username: 'System', message: `${user.username} has joined the server!` },
+        ],
+      }))
     }
 
     const onUserLeave = user => {
       setUsers(prev => prev.map(u => (u.userId === user.userId ? { ...u, connected: false } : u)))
+      // Add a "user has left" message in the "welcome" channel
+      setMessagesByChannel(prev => ({
+        ...prev,
+        welcome: [
+          ...(prev['welcome'] || []),
+          { username: 'System', message: `${user.username} has left the server.` },
+        ],
+      }))
     }
 
     const onUserDisconnect = user => {
@@ -78,7 +95,7 @@ function App() {
     socket.on('channels', onChannels)
     socket.on('message:channel', onMessageReceived)
     socket.on('users', onUsersUpdate)
-    socket.on('user:join', onUserJoin)
+    socket.on('user:join', onUserJoin) // Listen for 'user:join' event
     socket.on('user:leave', onUserLeave)
     socket.on('user:disconnect', onUserDisconnect)
 

@@ -3,7 +3,7 @@ const express = require('express')
 const http = require('http')
 const socketIo = require('socket.io')
 
-const { generateRandomId } = require('./server/utils.cjs')
+const { generateRandomId, generateRandomNumber } = require('./server/utils.cjs')
 const { initializeStore } = require('./server/sessions.cjs')
 const { initializeChannel } = require('./server/channels.cjs')
 const { buildMessage } = require('./server/messages.cjs')
@@ -19,8 +19,7 @@ const io = new socketIo.Server(server, {
   },
 })
 
-const CHANNEL_NAMES = ['welcome', 'general', 'react', 'learners', 'casual', 'random']
-const WELCOME_CHANNEL = 'welcome'
+const CHANNEL_NAMES = ['welcome', 'general', 'react', 'learners', 'casual']
 
 const sessions = initializeStore()
 const channels = CHANNEL_NAMES.map(channel => initializeChannel(channel))
@@ -38,7 +37,7 @@ io.use(async (socket, next) => {
       socket.userId = session.userId
       socket.username = session.username
 
-      next()
+      return next()
     }
   }
 
@@ -47,13 +46,12 @@ io.use(async (socket, next) => {
   socket.sessionId = generateRandomId()
   socket.userId = generateRandomId()
   socket.username = username
+  socket.avatar = generateRandomNumber()
 
   next()
 })
 
 io.on('connection', socket => {
-  const userSession = sessions.getSessionByUserId(socket.userId)
-
   const currentSession = {
     sessionId: socket.sessionId,
     userId: socket.userId,
@@ -67,22 +65,22 @@ io.on('connection', socket => {
   channels.forEach(channel => socket.join(channel.name))
   socket.join(currentSession.userId)
 
-  if (!userSession) {
-    // Announce when user joins the server for the first time
-    socket.in(WELCOME_CHANNEL).emit('user:join', {
-      userId: currentSession.userId,
-      username: currentSession.username,
-      connected: true,
-    })
-  }
+  // Announce when user joins the server
+  socket.broadcast.emit('user:join', {
+    userId: currentSession.userId,
+    username: currentSession.username,
+    connected: true,
+    avatar: currentSession.avatar,
+  })
 
   socket.emit('channels', channels)
   socket.emit('users', sessions.getAllUsers())
 
   socket.on('user:leave', () => {
-    socket.in(WELCOME_CHANNEL).emit('user:leave', {
+    socket.broadcast.emit('user:leave', {
       userId: currentSession.userId,
       username: currentSession.username,
+      connected: false,
     })
 
     sessions.deleteSession(socket.sessionId)

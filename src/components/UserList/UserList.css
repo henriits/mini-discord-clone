@@ -5,11 +5,36 @@
 }
 
 .user-item {
-  padding: 10px;
+  padding: 5px;
   color: #b9bbbe;
   cursor: pointer;
 }
 
 .user-item:hover {
   background-color: #36393f; /* Highlight on hover */
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+}
+
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-right: 8px; /* Space between dot and username */
+}
+
+.online {
+  background-color: green; /* Color for online users */
+}
+
+.offline {
+  background-color: red; /* Color for offline users */
+}
+
+.user-status {
+  font-weight: bold;
+  margin-top: 10px;
 }

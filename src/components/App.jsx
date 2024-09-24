@@ -81,7 +81,11 @@ function App() {
           <button onClick={() => socket.emit('user:leave')}>Leave Server</button>
           <button onClick={() => socket.disconnect()}>Disconnect</button>
           <div className="chat-layout">
-            <ChannelList channels={channels} onChannelSelect={handleChannelSelect} />
+            <ChannelList
+              channels={channels}
+              onChannelSelect={handleChannelSelect}
+              currentChannel={currentChannel}
+            />
             <div className="messages-container">
               <MessageList messages={messagesByChannel[currentChannel] || []} />
               <MessageInput sendMessage={sendMessage} />

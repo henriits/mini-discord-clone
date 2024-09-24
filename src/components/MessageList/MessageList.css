@@ -14,3 +14,13 @@
   color: #b9bbbe; /* Light grey text */
   word-break: break-all;
 }
+
+.username-color {
+  color: orange;
+}
+
+.timestamp {
+  color: #b9bbbe;
+  font-size: 0.9em;
+  margin-left: 10px;
+}

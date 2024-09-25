@@ -7,6 +7,7 @@ module.exports = {
       id: generateRandomId(),
       userId: session.userId,
       username: session.username,
+      timestamp: Date.now(),
       message,
     }
   },

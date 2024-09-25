@@ -14,16 +14,18 @@ function MessageList({ messages }) {
 
   return (
     <div className="message-list" ref={messageListRef}>
-      {messages.map((msg, index) => (
-        <div key={index} className="message-item">
-          <strong className="username-color">{msg.username}</strong>
-          <span className="timestamp">{formatDate(messages.timestamp)}</span>
-
-          <br />
-          <br />
-          {msg.message}
-        </div>
-      ))}
+      {messages.map((msg, index) => {
+        console.log(`Message ${index}:`, msg) // Debugging log
+        return (
+          <div key={index} className="message-item">
+            <strong className="username-color">{msg.username}</strong>
+            <span className="timestamp">{formatDate(msg.timestamp)}</span>
+            <br />
+            <br />
+            {msg.message}
+          </div>
+        )
+      })}
     </div>
   )
 }

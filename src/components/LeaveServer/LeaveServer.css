@@ -1,0 +1,11 @@
+.button-container {
+  position: fixed;
+  left: 20px;
+  bottom: 70px;
+  cursor: pointer;
+  display: flex;
+  justify-content: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

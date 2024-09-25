@@ -1,5 +1,8 @@
+// components/MessageInput/MessageInput.jsx
+
 import { useState } from 'react'
 import './MessageInput.css'
+import Button from '@/components/Button/Button' // Import the Button component
 
 function MessageInput({ sendMessage }) {
   const [message, setMessage] = useState('')
@@ -20,9 +23,9 @@ function MessageInput({ sendMessage }) {
         placeholder="Type a message..."
         className="message-input"
       />
-      <button type="submit" className="send-button">
+      <Button type="submit" className="send-button">
         Send
-      </button>
+      </Button>
     </form>
   )
 }

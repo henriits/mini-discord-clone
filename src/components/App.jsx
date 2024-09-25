@@ -78,8 +78,7 @@ function App() {
           <p>
             You are connected as {username} in #{currentChannel}.
           </p>
-          <button onClick={() => socket.emit('user:leave')}>Leave Server</button>
-          <button onClick={() => socket.disconnect()}>Disconnect</button>
+
           <div className="chat-layout">
             <ChannelList
               channels={channels}

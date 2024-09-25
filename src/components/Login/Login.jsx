@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { socket } from '@/libs/socket'
 import './Login.css'
+import Button from '../Button/Button'
 
 function Login({ setUsername }) {
   const [username, setUsernameState] = useState('')
@@ -21,9 +22,7 @@ function Login({ setUsername }) {
           placeholder="Enter your username"
           className="username-input"
         />
-        <button type="submit" className="login-button">
-          Connect
-        </button>
+        <Button type="submit">Connect</Button>
       </form>
     </div>
   )

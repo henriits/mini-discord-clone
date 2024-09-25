@@ -1,4 +1,4 @@
-import LeaveServer from '@/components/LeaveServer/LeaveServer' // Import LeaveServer here
+import LeaveServer from '@/components/LeaveServer/LeaveServer'
 import './ChannelList.css'
 
 function ChannelList({ channels, onChannelSelect, currentChannel }) {
@@ -14,7 +14,6 @@ function ChannelList({ channels, onChannelSelect, currentChannel }) {
         </div>
       ))}
 
-      {/* Render LeaveServer component */}
       <LeaveServer />
     </div>
   )

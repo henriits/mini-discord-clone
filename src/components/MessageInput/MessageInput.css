@@ -1,7 +1,7 @@
 .message-input-form {
   display: flex;
   padding: 10px;
-  background-color: #36393f; /* Match Discord theme */
+  background-color: #36393f;
 }
 
 .message-input {

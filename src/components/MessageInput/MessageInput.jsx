@@ -1,8 +1,6 @@
-// components/MessageInput/MessageInput.jsx
-
 import { useState } from 'react'
 import './MessageInput.css'
-import Button from '@/components/Button/Button' // Import the Button component
+import Button from '@/components/Button/Button'
 
 function MessageInput({ sendMessage }) {
   const [message, setMessage] = useState('')

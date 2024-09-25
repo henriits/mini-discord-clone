@@ -1,18 +1,18 @@
 .header {
   display: flex;
-  justify-content: space-between; /* Space between the title and username */
-  align-items: center; /* Center vertically */
-  padding: 10px 20px; /* Padding around the header */
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
   background-color: #202225;
 }
 
 .title {
-  margin: 0; /* Remove default margin */
-  font-size: 24px; /* Font size for the title */
+  margin: 0;
+  font-size: 24px;
 }
 
 .username {
-  margin: 0; /* Remove default margin */
-  font-size: 14px; /* Smaller font for the username */
-  text-align: right; /* Align text to the right */
+  margin: 0;
+  font-size: 14px;
+  text-align: right;
 }

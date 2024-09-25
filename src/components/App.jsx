@@ -1,3 +1,4 @@
+import './App.css'
 import { useState, useEffect } from 'react'
 import { socket } from '@/libs/socket'
 import Login from './Login/Login'

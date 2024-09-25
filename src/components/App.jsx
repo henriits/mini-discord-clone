@@ -5,6 +5,7 @@ import MessageInput from './MessageInput/MessageInput'
 import MessageList from './MessageList/MessageList'
 import ChannelList from './ChannelList/ChannelList'
 import UserList from './UserList/UserList'
+import Header from './Header/Header'
 import {
   handleConnect,
   handleDisconnect,
@@ -74,11 +75,7 @@ function App() {
         <Login setUsername={setUsername} />
       ) : (
         <div className="main-container">
-          <p>Mini-Discord-clone</p>
-          <p>
-            You are connected as {username} in #{currentChannel}.
-          </p>
-
+          <Header username={username} />
           <div className="chat-layout">
             <ChannelList
               channels={channels}

@@ -1,4 +1,4 @@
-import Avatar from '../Avatar/Avatar'
+import User from '@/components/User/User'
 import './UserList.css'
 
 function UserList({ users }) {
@@ -7,29 +7,13 @@ function UserList({ users }) {
       <div className="online-users">
         <p className="user-status">ONLINE</p>
         {users.length > 0 &&
-          users
-            .filter(user => user.connected)
-            .map(user => (
-              <div key={user.userId} className="user-item">
-                <Avatar />
-                <span className="status-dot online" />
-                {user.username}
-              </div>
-            ))}
+          users.filter(user => user.connected).map(user => <User key={user.userId} user={user} />)}
       </div>
 
       <div className="offline-users">
         <p className="user-status">OFFLINE</p>
         {users.length > 0 &&
-          users
-            .filter(user => !user.connected)
-            .map(user => (
-              <div key={user.userId} className="user-item">
-                <Avatar />
-                <span className="status-dot offline" />
-                {user.username}
-              </div>
-            ))}
+          users.filter(user => !user.connected).map(user => <User key={user.userId} user={user} />)}
       </div>
     </div>
   )

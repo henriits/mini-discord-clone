@@ -1,0 +1,35 @@
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  color: #b9bbbe;
+  cursor: pointer;
+}
+
+.user-item:hover {
+  background-color: #36393f;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border: 5px solid #2c2f33;
+}
+
+.online {
+  background-color: green;
+}
+
+.offline {
+  background-color: red;
+}

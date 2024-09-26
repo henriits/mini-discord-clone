@@ -1,3 +1,4 @@
+import Avatar from '../Avatar/Avatar'
 import './UserList.css'
 
 function UserList({ users }) {
@@ -10,6 +11,7 @@ function UserList({ users }) {
             .filter(user => user.connected)
             .map(user => (
               <div key={user.userId} className="user-item">
+                <Avatar />
                 <span className="status-dot online" />
                 {user.username}
               </div>
@@ -23,6 +25,7 @@ function UserList({ users }) {
             .filter(user => !user.connected)
             .map(user => (
               <div key={user.userId} className="user-item">
+                <Avatar />
                 <span className="status-dot offline" />
                 {user.username}
               </div>

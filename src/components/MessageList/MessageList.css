@@ -6,21 +6,37 @@
   max-height: calc(100vh - 200px);
 }
 
-.message-item {
-  margin-bottom: 20px;
-  padding: 8px;
-  border-radius: 4px;
-  background-color: #42464d;
-  color: #b9bbbe;
-  word-break: break-all;
-}
-
 .username-color {
   color: orange;
 }
 
 .timestamp {
-  color: #b9bbbe;
-  font-size: 0.9em;
+  color: #6e7074f6;
+  font-size: 0.8em;
   margin-left: 10px;
+}
+
+.custom-button {
+  margin-left: 10px;
+}
+
+.message-item {
+  margin-bottom: 20px; /* space between messages */
+}
+
+.message-content {
+  display: flex;
+  align-items: flex-start; /* Align avatar and text at the top */
+  gap: 10px;
+}
+
+.message-text {
+  display: flex;
+  flex-direction: column; /* Stack username and message vertically */
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between; /* Space between username and timestamp */
+  align-items: center;
 }

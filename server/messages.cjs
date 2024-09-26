@@ -9,6 +9,7 @@ module.exports = {
       username: session.username,
       timestamp: Date.now(),
       message,
+      avatar: session.avatar,
     }
   },
 }

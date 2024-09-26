@@ -39,7 +39,7 @@ function App() {
   }
 
   useEffect(() => {
-    const unregisterSocketEvents = () => {
+    const socketEvents = () => {
       socket.off('connect')
       socket.off('disconnect')
       socket.off('session')
@@ -67,7 +67,7 @@ function App() {
     )
     socket.on('user:disconnect', handleUserDisconnect(setUsers))
 
-    return unregisterSocketEvents
+    return socketEvents
   }, [currentChannel])
 
   return (

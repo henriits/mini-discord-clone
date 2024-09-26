@@ -18,9 +18,10 @@
 
 .channel-list,
 .user-list {
-  width: 100px;
+  width: 30%;
   background-color: #2c2f33;
   padding: 10px;
+  max-height: 100vh;
 }
 
 .messages-container {
@@ -30,6 +31,9 @@
   background-color: #2f3136;
   padding: 10px;
   gap: 20px;
+  height: 85vh;
+  overflow-y: auto;
+  width: 10;
 }
 
 h1 {

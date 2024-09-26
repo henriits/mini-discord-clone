@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import './MessageList.css'
 import formatDate from '@/utils/dateFormatter'
+import Avatar from '../Avatar/Avatar'
 
 function MessageList({ messages }) {
   const messageListRef = useRef(null)
@@ -18,11 +19,16 @@ function MessageList({ messages }) {
         console.log(`Message ${index}:`, msg) // Debugging log
         return (
           <div key={index} className="message-item">
-            <strong className="username-color">{msg.username}</strong>
-            <span className="timestamp">{formatDate(msg.timestamp)}</span>
-            <br />
-            <br />
-            {msg.message}
+            <div className="message-content">
+              <Avatar />
+              <div className="message-text">
+                <div className="message-header">
+                  <strong className="username-color">{msg.username}</strong>
+                  <span className="timestamp">{formatDate(msg.timestamp)}</span>
+                </div>
+                <div className="message-body">{msg.message}</div>
+              </div>
+            </div>
           </div>
         )
       })}

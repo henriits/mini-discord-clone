@@ -1,6 +1,6 @@
-# How to use this starter kit
+# Mini discord clone
 
-The starter kit includes both the Vite + React setup as well as the WebSocket server tailored specifically for the Mini Discord Clone project.
+Real time chat application built with React and WebSockets.
 
 ## React application
 

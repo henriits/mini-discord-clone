@@ -68,7 +68,7 @@ function App() {
     socket.on('user:disconnect', handleUserDisconnect(setUsers))
 
     return socketEvents
-  }, [currentChannel])
+  }, [])
 
   return (
     <div className="app-container">

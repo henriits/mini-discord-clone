@@ -68,10 +68,16 @@ export const handleUserDisconnect = setUsers => user => {
   setUsers(prevUsers => updateUsers(prevUsers, user, false))
 }
 
-// Adds system messages to the "welcome" channel
+// Adds system messages to the "welcome" channel with a timestamp
 export const addSystemMessageToWelcomeChannel = setMessagesByChannel => message => {
+  const systemMessage = {
+    username: 'System',
+    message,
+    timestamp: Date.now(),
+  }
+
   setMessagesByChannel(prevMessages => ({
     ...prevMessages,
-    welcome: [...(prevMessages['welcome'] || []), { username: 'System', message }],
+    welcome: [...(prevMessages['welcome'] || []), systemMessage],
   }))
 }

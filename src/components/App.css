@@ -1,6 +1,7 @@
 .app-container {
   display: flex;
   flex-direction: column;
+  height: 100vh; /* Ensure it takes full height of the viewport */
 }
 
 .main-container {
@@ -31,9 +32,9 @@
   background-color: #2f3136;
   padding: 10px;
   gap: 20px;
-  height: 85vh;
+  height: 100vh;
   overflow-y: auto;
-  width: 10;
+  max-width: 70vw;
 }
 
 h1 {

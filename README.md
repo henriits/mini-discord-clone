@@ -12,17 +12,17 @@ The WebSocket server uses [socket.io](https://socket.io). The main server file i
 
 ### Supported events
 
-* `connect` - emitted to the client when WebSocket connection is established with the server.
-* `session` - emitted when session is initialized after connecting to the server.
-* `channels` - returns list of channels along with contained messages in each channel.
-* `message:channel` - emitted to all clients in the `<channel>` when the user sends a message to that channel. The event is also emitted to the sender.
-* `users` - returns list of users (both online and offline).
-* `user:join` - emitted to all clients in the `welcome` channel when a new user joins the server.
-* `user:disconnect` - emitted to all clients when the user disconnects (WebSocket connection closed).
-* `disconnect` - emitted to the client when WebSocket connection is closed.
+- `connect` - emitted to the client when WebSocket connection is established with the server.
+- `session` - emitted when session is initialized after connecting to the server.
+- `channels` - returns list of channels along with contained messages in each channel.
+- `message:channel` - emitted to all clients in the `<channel>` when the user sends a message to that channel. The event is also emitted to the sender.
+- `users` - returns list of users (both online and offline).
+- `user:join` - emitted to all clients in the `welcome` channel when a new user joins the server.
+- `user:disconnect` - emitted to all clients when the user disconnects (WebSocket connection closed).
+- `disconnect` - emitted to the client when WebSocket connection is closed.
 
-* `user:leave` - client should emit this event when user explicitly leaves the server.
-* `message:channel:send` - client should emit this event when user sends a message to a specific channel.
+- `user:leave` - client should emit this event when user explicitly leaves the server.
+- `message:channel:send` - client should emit this event when user sends a message to a specific channel.
 
 Inspect the `server.cjs` to see what parameters and arguments are accompanied by each event.
 
@@ -55,3 +55,5 @@ React + Vite dev server must be running separately:
 ```sh
 npm run dev
 ```
+
+![Alt text](https://i.imghippo.com/files/xXf8848Uks.png)
